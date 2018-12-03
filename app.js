@@ -81,8 +81,17 @@ function cadastrarDespesa() {
         document.getElementById('modal_texto').innerHTML = 'Despesa foi cadastrada corretamente.'
         document.getElementById('btn_modal').className = 'btn btn-success'
 
+        //Show modal when correctly inserted
         $('#modelRegristroDespesa').modal('show')
         bd.gravar(despesa)
+
+        //clean inputs
+        ano.value = ''
+        mes.value = ''
+        dia.value = ''
+        tipo.value = ''
+        descricao.value = ''
+        valor.value = ''
          
     } else {
         document.getElementById('exampleModalLabel').innerHTML = 'Erro na inclusão do registro'
