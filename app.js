@@ -57,13 +57,13 @@ function cadastrarDespesa() {
     )
 
     if ( despesa.validarDados() ) {
+        //jQueri para mostrar modal
         $('#sucessoGravacao').modal('show')
-        console.log('dados validos')
-        //dialog de sucesso
-        //bd.gravar(despesa)
+        bd.gravar(despesa)
+        
     } else {
+        //jQueri para mostrar modal
         $('#erroGravacao').modal('show')
-        console.log('dados invalidos')
     }
 }
 
