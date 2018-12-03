@@ -37,6 +37,25 @@ class Bd {
         localStorage.setItem(id,JSON.stringify(d))
         localStorage.setItem('id', id)
     }
+
+    recuperarTodosRegistros() {
+        let listaDespesas = Array()
+        let id = localStorage.getItem('id')
+        
+        //recupera despesas a cada item
+        for( let i = 1; i <= id; i++ ) {
+            let despesa = JSON.parse(localStorage.getItem(i))
+
+            //verifica se tem item removidos
+            if (despesa === null) {
+                continue
+            }
+
+            listaDespesas.push(despesa)
+        }
+
+        return listaDespesas
+    }
 }
 
 
@@ -77,4 +96,32 @@ function cadastrarDespesa() {
 }
 
 
+function carregaListaDespesas() {
+    
+    //carrega a lista gerada pelo objeto bd para uma variavel
+    let listaDespesaExibir = Array()
+    listaDespesaExibir = bd.recuperarTodosRegistros()
 
+    //exibe a lista carregada
+    let lista = document.getElementById('tabelaDespesa')
+
+    listaDespesaExibir.forEach( function(id) {
+        
+        let tableRow = lista.insertRow()
+        
+        tableRow.insertCell(0).innerHTML = `${id.dia}/${id.mes}/${id.ano}`  
+        
+        switch(id.tipo) {
+            case '1': id.tipo = 'Alimentação'; break
+            case '2': id.tipo = 'Educação'; break
+            case '3': id.tipo = 'Lazer'; break
+            case '4': id.tipo = 'Saúde'; break
+            case '5': id.tipo = 'Transporte'; break
+        }
+        
+        tableRow.insertCell(1).innerHTML = id.tipo
+        tableRow.insertCell(2).innerHTML = id.descricao
+        tableRow.insertCell(3).innerHTML = id.valor
+
+    })
+}

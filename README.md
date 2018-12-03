@@ -8,4 +8,6 @@ I'll practice some concepts and design along with coding and exercising the ES6 
 
 //This was something that I needed my project today. Glad that I learned sonner than later.
 
-- 
+### Day 2
+- Refactoring the modal. This way the JS insert the text and classes on modal after each register.
+- Now the 'consulta.html' lists all the bd.
