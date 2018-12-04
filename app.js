@@ -58,7 +58,35 @@ class Bd {
     }
 
     pesquisar(despesa) {
-        console.log(despesa)
+        let despesasFiltradas = Array()
+        despesasFiltradas = this.recuperarTodosRegistros()
+
+        if (despesa.ano != '') {
+            despesasFiltradas = despesasFiltradas.filter (d => d.ano == despesa.ano)
+        }
+
+        if (despesa.mes != '') {
+            despesasFiltradas = despesasFiltradas.filter (d => d.mes == despesa.mes)
+        }
+
+        if (despesa.dia != '') {
+            despesasFiltradas = despesasFiltradas.filter (d => d.dia == despesa.dia)
+        }
+
+        if (despesa.tipo != '') {
+            despesasFiltradas = despesasFiltradas.filter (d => d.tipo == despesa.tipo)
+        }
+
+        if (despesa.descricao != '') {
+            despesasFiltradas = despesasFiltradas.filter (d => d.descricao == despesa.descricao)
+        }
+
+        if (despesa.valor != '') {
+            despesasFiltradas = despesasFiltradas.filter (d => d.valor == despesa.valor)
+        }
+
+        return despesasFiltradas
+
     }
 
 }
@@ -111,13 +139,36 @@ function cadastrarDespesa() {
 
 
 function carregaListaDespesas() {
-    
-    //carrega a lista gerada pelo objeto bd para uma variavel
+
     let listaDespesaExibir = Array()
     listaDespesaExibir = bd.recuperarTodosRegistros()
+    escreverLista(listaDespesaExibir)
+    
+}
 
-    //exibe a lista carregada
+
+function pesquisarDespesa() {
+
+    let ano = document.getElementById('ano').value
+    let mes = document.getElementById('mes').value
+    let dia = document.getElementById('dia').value
+    let tipo = document.getElementById('tipo').value
+    let descricao = document.getElementById('descricao').value
+    let valor = document.getElementById('valor').value
+
+    let despesaPesquisa = new Despesa(ano, mes, dia, tipo, descricao, valor)
+    
+    let resultadoFiltro = bd.pesquisar(despesaPesquisa)
+    escreverLista(resultadoFiltro)
+}
+
+function escreverLista(listaParaExibir) {
+    
+    let listaDespesaExibir = Array()
+    listaDespesaExibir = listaParaExibir
+
     let lista = document.getElementById('tabelaDespesa')
+    lista.innerHTML = ''
 
     listaDespesaExibir.forEach( function(id) {
         
@@ -138,20 +189,4 @@ function carregaListaDespesas() {
         tableRow.insertCell(3).innerHTML = id.valor
 
     })
-}
-
-
-function pesquisarDespesa() {
-
-    let ano = document.getElementById('ano').value
-    let mes = document.getElementById('mes').value
-    let dia = document.getElementById('dia').value
-    let tipo = document.getElementById('tipo').value
-    let descricao = document.getElementById('descricao').value
-    let valor = document.getElementById('valor').value
-
-    let despesaPesquisa = new Despesa(ano, mes, dia, tipo, descricao, valor)
-    
-    bd.pesquisar(despesaPesquisa)
-    
 }
