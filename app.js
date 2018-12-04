@@ -51,8 +51,10 @@ class Bd {
                 continue
             }
 
+            despesa.id = i
             listaDespesas.push(despesa)
         }
+
 
         return listaDespesas
     }
@@ -87,6 +89,10 @@ class Bd {
 
         return despesasFiltradas
 
+    }
+
+    remover(id) {
+        localStorage.removeItem(id)
     }
 
 }
@@ -143,7 +149,7 @@ function carregaListaDespesas() {
     let listaDespesaExibir = Array()
     listaDespesaExibir = bd.recuperarTodosRegistros()
     escreverLista(listaDespesaExibir)
-    
+
 }
 
 
@@ -187,6 +193,18 @@ function escreverLista(listaParaExibir) {
         tableRow.insertCell(1).innerHTML = id.tipo
         tableRow.insertCell(2).innerHTML = id.descricao
         tableRow.insertCell(3).innerHTML = id.valor
+        
+        let delBtn = document.createElement('button')
+        delBtn.className = 'btn btn-danger'
+        delBtn.innerHTML = '<i class="fas fa-times"></i>'
+        delBtn.id = id.id
+        delBtn.onclick = function() {
+            bd.remover(this.id)
+            carregaListaDespesas()
+        }
+        tableRow.insertCell(4).append(delBtn)
 
     })
+    
+
 }
